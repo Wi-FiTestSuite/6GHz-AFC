@@ -310,7 +310,7 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
           channel: parseInt(classChannel[1]),
           maxEIRP: actualChannelInfo[channel],
           expectedMaxEIRP: expectedChannelInfo[channel],
-          difference: parseFloat(actualChannelInfo[channel] - expectedChannelInfo[channel]).toFixed(2),
+          difference: parseFloat(expectedChannelInfo[channel] - actualChannelInfo[channel]).toFixed(2),
           status: "Found"
         });
       }
