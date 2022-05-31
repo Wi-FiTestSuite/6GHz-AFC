@@ -141,7 +141,7 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
   <script>
     var freq_increment_range = 0.25;
 
-    function getRanges(numbers, frequencyMap) {
+    function getRanges(numbers, frequencyMap, expectedFrequencyMap = undefined) {
       let ranges = [];
 
       let startRange = 0;
@@ -153,19 +153,61 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
           continue;
         }
 
+        let isPSDSame = false;
+
         if (endRange + freq_increment_range == number && frequencyMap[endRange.toString()] == frequencyMap[number.toString()]) {
-          endRange = number;
-        } else {
-          let roundedStart = Math.round(startRange);
-          let roundedEnd = Math.round(endRange);
-
-          if (roundedStart != roundedEnd) {
-            ranges.push([roundedStart, roundedEnd]);
+          isPSDSame = true
+          if(expectedFrequencyMap !== undefined && expectedFrequencyMap[endRange.toString()] == expectedFrequencyMap[number.toString()]) {
+            isPSDSame = true;
+          } else {
+            isPSDSame = false;
           }
-
-          startRange = number;
-          endRange = number;
         }
+
+        if(isPSDSame) {
+            endRange = number;
+        } else {
+            let roundedStart = Math.round(startRange);
+            let roundedEnd = Math.round(endRange);
+
+            if (roundedStart != roundedEnd) {
+              ranges.push([roundedStart, roundedEnd]);
+            }
+
+            startRange = number;
+            endRange = number;
+        }
+
+        // if(expectedFrequencyMap !== undefined) {
+        //   if(endRange + freq_increment_range == number && frequencyMap[endRange.toString()] == frequencyMap[number.toString()]
+        //      && expectedFrequencyMap[endRange.toString()] == expectedFrequencyMap[number.toString()]) {
+        //     endRange = number;
+        //   } else {
+        //     let roundedStart = Math.round(startRange);
+        //     let roundedEnd = Math.round(endRange);
+
+        //     if (roundedStart != roundedEnd) {
+        //       ranges.push([roundedStart, roundedEnd]);
+        //     }
+
+        //     startRange = number;
+        //     endRange = number;
+        //   }
+        // } else {
+        //   if (endRange + freq_increment_range == number && frequencyMap[endRange.toString()] == frequencyMap[number.toString()]) {
+        //     endRange = number;
+        //   } else {
+        //     let roundedStart = Math.round(startRange);
+        //     let roundedEnd = Math.round(endRange);
+
+        //     if (roundedStart != roundedEnd) {
+        //       ranges.push([roundedStart, roundedEnd]);
+        //     }
+
+        //     startRange = number;
+        //     endRange = number;
+        //   }
+        // }
       }
 
       if (startRange != endRange) {
@@ -212,9 +254,16 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
       let missingFrequencies = expectedFrequencies.filter(d => !actualFrequencies.includes(d));
 
       let addedfrequencyRange = getRanges(addedFrequencies, actualFrequencyMap);
-      let commonfrequencyRange = getRanges(commonFrequencies, actualFrequencyMap);
+      let commonfrequencyRange = getRanges(commonFrequencies, actualFrequencyMap, exceptFrequencyMap);
       let missingfrequencyRange = getRanges(missingFrequencies, exceptFrequencyMap);
+      
+      // let commonfrequencyRangeActual = getRanges(commonFrequencies, actualFrequencyMap);
+      // let commonfrequencyRangeExpected = getRanges(commonFrequencies, exceptFrequencyMap);
 
+      // let commonfrequencyRange = commonfrequencyRangeActual;
+
+      // if(commonfrequencyRangeExpected.length > commonfrequencyRange.length)
+      //   commonfrequencyRange = commonfrequencyRangeExpected;
 
       let afcAddedFrequency = [];
 
