@@ -231,14 +231,14 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
 
       actualFrequencyList.forEach(e => {
         for (var freq = parseFloat(e.frequencyRange.lowFrequency); freq <= parseFloat(e.frequencyRange.highFrequency); freq = freq + freq_increment_range) {
-          actualFrequencyMap[freq.toString()] = e.maxPSD;
+          actualFrequencyMap[freq.toString()] = e.maxPsd;
         }
       });
 
 
       expectedFrequencyList.forEach(e => {
         for (var freq = parseFloat(e.frequencyRange.lowFrequency); freq <= parseFloat(e.frequencyRange.highFrequency); freq = freq + freq_increment_range) {
-          exceptFrequencyMap[freq.toString()] = e.maxPSD;
+          exceptFrequencyMap[freq.toString()] = e.maxPsd;
         }
       });
 
@@ -271,8 +271,8 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
         comparedRanges.push({
           lowFrequency: frequencyRange[0],
           highFrequency: frequencyRange[1],
-          maxPSD: actualFrequencyMap[frequencyRange[0]],
-          expectedMaxPSD: undefined,
+          maxPsd: actualFrequencyMap[frequencyRange[0]],
+          expectedmaxPsd: undefined,
           difference: undefined,
           status: "Missing"
         })
@@ -285,8 +285,8 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
         comparedRanges.push({
           lowFrequency: frequencyRange[0],
           highFrequency: frequencyRange[1],
-          maxPSD: actualFrequencyMap[frequencyRange[0]],
-          expectedMaxPSD: exceptFrequencyMap[frequencyRange[0]],
+          maxPsd: actualFrequencyMap[frequencyRange[0]],
+          expectedmaxPsd: exceptFrequencyMap[frequencyRange[0]],
           difference: parseFloat(exceptFrequencyMap[frequencyRange[0]] - actualFrequencyMap[frequencyRange[0]]).toFixed(2),
           status: "Found"
         })
@@ -300,8 +300,8 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
         comparedRanges.push({
           lowFrequency: frequencyRange[0],
           highFrequency: frequencyRange[1],
-          maxPSD: undefined,
-          expectedMaxPSD: exceptFrequencyMap[frequencyRange[0]],
+          maxPsd: undefined,
+          expectedmaxPsd: exceptFrequencyMap[frequencyRange[0]],
           difference: undefined,
           status: "Added"
         })
@@ -502,23 +502,23 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
           "classes": statusClass
         });
 
-        let maxPSD = "";
-        if (comparedRange["maxPSD"] !== undefined)
-          maxPSD = comparedRange["maxPSD"];
+        let maxPsd = "";
+        if (comparedRange["maxPsd"] !== undefined)
+          maxPsd = comparedRange["maxPsd"];
 
         tableRow.push({
-          "name": maxPSD,
+          "name": maxPsd,
           "classes": ['text-right']
         });
 
 
-        let expectedMaxPSD = "";
-        if (comparedRange["expectedMaxPSD"] !== undefined)
-          expectedMaxPSD = comparedRange["expectedMaxPSD"];
+        let expectedmaxPsd = "";
+        if (comparedRange["expectedmaxPsd"] !== undefined)
+          expectedmaxPsd = comparedRange["expectedmaxPsd"];
 
 
         tableRow.push({
-          "name": expectedMaxPSD,
+          "name": expectedmaxPsd,
           "classes": ['text-right']
         });
 
@@ -688,25 +688,25 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
 
         var currentDataSet = new Array(all_frequency.length).fill(undefined);
         for (var i = element.frequencyRange.lowFrequency; i <= element.frequencyRange.highFrequency; i++) {
-          currentDataSet[all_frequency.indexOf(i.toString())] = element.maxPSD;
-          dataset1[all_frequency.indexOf(i)] = element.maxPSD;
+          currentDataSet[all_frequency.indexOf(i.toString())] = element.maxPsd;
+          dataset1[all_frequency.indexOf(i)] = element.maxPsd;
         }
-        stepData1[element.frequencyRange.lowFrequency.toString()] = element.maxPSD;
-        stepData1[element.frequencyRange.highFrequency.toString()] = element.maxPSD;
+        stepData1[element.frequencyRange.lowFrequency.toString()] = element.maxPsd;
+        stepData1[element.frequencyRange.highFrequency.toString()] = element.maxPsd;
 
         dataObj1.push({
           x: element.frequencyRange.lowFrequency,
-          y: element.maxPSD
+          y: element.maxPsd
         });
         dataObj1.push({
           x: element.frequencyRange.highFrequency,
-          y: element.maxPSD
+          y: element.maxPsd
         });
 
 
         let currentRange = {};
-        currentRange[element.frequencyRange.lowFrequency.toString()] = element.maxPSD;
-        currentRange[element.frequencyRange.highFrequency.toString()] = element.maxPSD;
+        currentRange[element.frequencyRange.lowFrequency.toString()] = element.maxPsd;
+        currentRange[element.frequencyRange.highFrequency.toString()] = element.maxPsd;
 
         dataSets.push({
           label: "response_1",
@@ -726,24 +726,24 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
       other_server_response.availableSpectrumInquiryResponses[0].availableFrequencyInfo.forEach(element => {
         var currentDataSet = new Array(all_frequency.length).fill(undefined);
         for (var i = element.frequencyRange.lowFrequency; i <= element.frequencyRange.highFrequency; i++) {
-          currentDataSet[all_frequency.indexOf(i.toString())] = element.maxPSD;
-          dataset2[all_frequency.indexOf(i)] = element.maxPSD;
+          currentDataSet[all_frequency.indexOf(i.toString())] = element.maxPsd;
+          dataset2[all_frequency.indexOf(i)] = element.maxPsd;
         }
 
-        stepData2[element.frequencyRange.lowFrequency.toString()] = element.maxPSD;
-        stepData2[element.frequencyRange.highFrequency.toString()] = element.maxPSD;
+        stepData2[element.frequencyRange.lowFrequency.toString()] = element.maxPsd;
+        stepData2[element.frequencyRange.highFrequency.toString()] = element.maxPsd;
 
         let currentRange = {};
-        currentRange[element.frequencyRange.lowFrequency.toString()] = element.maxPSD;
-        currentRange[element.frequencyRange.highFrequency.toString()] = element.maxPSD;
+        currentRange[element.frequencyRange.lowFrequency.toString()] = element.maxPsd;
+        currentRange[element.frequencyRange.highFrequency.toString()] = element.maxPsd;
 
         dataObj2.push({
           x: element.frequencyRange.lowFrequency,
-          y: element.maxPSD
+          y: element.maxPsd
         });
         dataObj2.push({
           x: element.frequencyRange.highFrequency,
-          y: element.maxPSD
+          y: element.maxPsd
         });
 
         dataSets.push({
