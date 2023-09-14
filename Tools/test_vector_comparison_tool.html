@@ -42,13 +42,18 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
       <main class="flex justify-center flex-col">
         <header class="bg-indigo-700 text-white shadow">
           <div class="py-4 px-4 sm:px-6 lg:px-8 ">
-            <h1 class="text-xl font-semibold ">AFC Reponse Comparison</h1>
+            <h1 class="text-xl font-semibold ">AFC Response Comparison</h1>
           </div>
         </header>
         <div class="p-5">
           <div class="flex flex-row gap-4 items-center">
             <div class="flex-1">
-              <label for="response-1" class="block text-sm font-medium text-gray-700">Response 1</label>
+              <!-- <label for="response-1" class="block text-sm font-medium text-gray-700">Response 1</label> -->
+              <input type="file" id="file-input-1" style="display: none;">
+              <div class="px-4 py-3 bg-gray-50 sm:px-0 flex justify-left">
+                <button type="button" id="load-response-1"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Load Response 1</button>
+              </div>
               <div class="mt-1">
                 <textarea id="response-1" name="about" rows="3"
                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 p-2 block w-full sm:text-sm border border-gray-300 rounded-md h-48"
@@ -74,7 +79,12 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
               </button>
             </div>
             <div class="flex-1">
-              <label for="response-2" class="block text-sm font-medium text-gray-700">Response 2</label>
+              <!-- <label for="response-2" class="block text-sm font-medium text-gray-700">Response 2</label> -->
+              <input type="file" id="file-input-2" style="display: none;">
+              <div class="px-4 py-3 bg-gray-50 sm:px-0 flex justify-left">
+                <button type="button" id="load-response-2"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Load Response 2</button>
+							</div>
               <div class="mt-1">
                 <textarea id="response-2" name="about" rows="3"
                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 p-2 block w-full sm:text-sm border border-gray-300 rounded-md h-48"
@@ -912,6 +922,50 @@ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS 
 
       document.getElementById('response-1').value = response_2_string;
       document.getElementById('response-2').value = response_1_string;
+    });
+
+    const file_input_1 = document.getElementById('file-input-1');
+    const load_response_1 = document.getElementById('load-response-1');
+    const response_1 = document.getElementById('response-1');
+
+    load_response_1.addEventListener('click', () => {
+      file_input_1.click();
+    });
+
+    file_input_1.addEventListener('change', () => {
+        const selectedFile = file_input_1.files[0];
+
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                response_1.value = event.target.result;
+            };
+
+            reader.readAsText(selectedFile);
+        }
+    });
+	
+    const file_input_2 = document.getElementById('file-input-2');
+    const load_response_2 = document.getElementById('load-response-2');
+    const response_2 = document.getElementById('response-2');
+
+    load_response_2.addEventListener('click', () => {
+      file_input_2.click();
+    });
+
+    file_input_2.addEventListener('change', () => {
+        const selectedFile = file_input_2.files[0];
+
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                response_2.value = event.target.result;
+            };
+
+            reader.readAsText(selectedFile);
+        }
     });
   </script>
 </body>
