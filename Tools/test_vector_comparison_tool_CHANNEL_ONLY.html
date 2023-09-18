@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<!--
+Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted (subject to the limitations in the disclaimer below) provided that the following conditions are met:
+
+  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+  * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+-->
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>AFC Response comparison</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel=" stylesheet" />
+</head>
+
+<body>
+
+  <!-- This example requires Tailwind CSS v2.0+ -->
+  <!--
+  This example requires updating your template:
+
+  ```
+  <html class="h-full bg-gray-100">
+  <body class="h-full">
+  ```
+-->
+  <div class="min-h-full flex justify-center  bg-gray-300">
+    <div class="container bg-white">
+      <main class="flex justify-center flex-col">
+        <header class="bg-indigo-700 text-white shadow">
+          <div class="py-4 px-4 sm:px-6 lg:px-8 ">
+            <h1 class="text-xl font-semibold ">AFC Response Comparison</h1>
+          </div>
+        </header>
+        <div class="p-5">
+          <div class="flex flex-row gap-4 items-center">
+            <div class="flex-1">
+              <!-- <label for="response-1" class="block text-sm font-medium text-gray-700">Response 1</label> -->
+			  <input type="file" id="file-input-1" style="display: none;">
+			  <div class="px-4 py-3 bg-gray-50 sm:px-0 flex justify-left">
+                <button type="button" id="load-response-1"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Load Response 1</button>
+              </div>
+              <div class="mt-1">
+                <textarea id="response-1" name="about" rows="3"
+                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 p-2 block w-full sm:text-sm border border-gray-300 rounded-md h-48"
+                  placeholder="response JSON"></textarea>
+              </div>
+              <div class="mt-1 text-red-600 text-sm" id="response-1-message">
+              </div>
+            </div>
+            <div>
+              <!-- <button class="px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                </svg>
+              </button> -->
+              <button id="swap-response" type="button"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z">
+                  </path>
+                </svg>
+              </button>
+            </div>
+            <div class="flex-1">
+              <!-- <label for="response-2" class="block text-sm font-medium text-gray-700">Response 2</label> -->
+			  <input type="file" id="file-input-2" style="display: none;">
+			  <div class="px-4 py-3 bg-gray-50 sm:px-0 flex justify-left">
+                <button type="button" id="load-response-2"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Load Response 2</button>
+              </div>
+              <div class="mt-1">
+                <textarea id="response-2" name="about" rows="3"
+                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 p-2 block w-full sm:text-sm border border-gray-300 rounded-md h-48"
+                  placeholder="response JSON"></textarea>
+              </div>
+              <div class="mt-1 text-red-600 text-sm" id="response-2-message">
+              </div>
+            </div>
+          </div>
+          <div class="px-4 py-3 bg-gray-50 sm:px-6 flex justify-center">
+            <button type="button" id="compare-response"
+              class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Compare</button>
+          </div>
+          <div id="comparision-result-wrapper" class="invisible">
+            <div class="md:grid md:grid-cols-3 md:gap-6">
+              <div class="md:col-span-1">
+                <div class="px-4 sm:px-0">
+                  <h3 class="text-lg font-medium leading-6 text-gray-900  font-semibold ">Frequency comparison</h3>
+                </div>
+              </div>
+            </div>
+            <div class="px-4 py-6 sm:px-0">
+              <div id="chart-container">
+                <canvas id="myChart" width="400" height="40"></canvas>
+              </div>
+            </div>
+            <div class="relative rounded-xl overflow-auto p-5">
+              <div class="shadow overflow-hidden border border-gray-200 sm:rounded-lg" id="frequency-table">
+              </div>
+            </div>
+            <div class="hidden sm:block" aria-hidden="true">
+              <div class="py-5">
+                <div class="border-t border-gray-200"></div>
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div class="md:col-span-1">
+                  <div class="px-4 sm:px-0">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900  font-semibold ">Channel comparison</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="relative rounded-xl overflow-auto p-5">
+                <div class="shadow overflow-hidden border border-gray-200 sm:rounded-lg" id="channel-table">
+                </div>
+              </div>
+              <div class="hidden sm:block" aria-hidden="true">
+                <div class="py-5">
+                  <div class="border-t border-gray-200"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+  <!-- <script src="response_1_response.js"></script>
+  <script src="other_response.js"></script> -->
+  <script>
+    
+	function compareChannels(actualChannelList, expectedChannelList) {
+      let actualChannelInfo = {};
+      actualChannelList.forEach(e => {
+        operatingClass = e.globalOperatingClass;
+        e.channelCfi.forEach((c, idx) => {
+          actualChannelInfo[operatingClass + "-" + c] = e.maxEirp[idx];
+        });
+      });
+
+
+      let expectedChannelInfo = {};
+      expectedChannelList.forEach(e => {
+        operatingClass = e.globalOperatingClass;
+        e.channelCfi.forEach((c, idx) => {
+          expectedChannelInfo[operatingClass + "-" + c] = e.maxEirp[idx];
+        });
+      });
+
+
+
+      let actualChannels = Object.keys(actualChannelInfo);
+      let expectedChannels = Object.keys(expectedChannelInfo);
+
+      let addedChannels = actualChannels.filter(d => !expectedChannels.includes(d));
+      let commonChannels = actualChannels.filter(d => expectedChannels.includes(d));
+      let missingChannels = expectedChannels.filter(d => !actualChannels.includes(d));
+
+
+      let channelComparison = [];
+
+      for (let channel of addedChannels) {
+        let classChannel = channel.split("-");
+        channelComparison.push({
+          operatingClass: parseInt(classChannel[0]),
+          channel: parseInt(classChannel[1]),
+          maxEIRP: actualChannelInfo[channel],
+          expectedMaxEIRP: undefined,
+          difference: undefined,
+          status: "Missing"
+        });
+      }
+
+      for (let channel of commonChannels) {
+        let classChannel = channel.split("-");
+        channelComparison.push({
+          operatingClass: parseInt(classChannel[0]),
+          channel: parseInt(classChannel[1]),
+          maxEIRP: actualChannelInfo[channel],
+          expectedMaxEIRP: expectedChannelInfo[channel],
+          difference: parseFloat(expectedChannelInfo[channel] - actualChannelInfo[channel]).toFixed(2),
+          status: "Found"
+        });
+      }
+
+      for (let channel of missingChannels) {
+        let classChannel = channel.split("-");
+        channelComparison.push({
+          operatingClass: parseInt(classChannel[0]),
+          channel: parseInt(classChannel[1]),
+          maxEIRP: undefined,
+          expectedMaxEIRP: expectedChannelInfo[channel],
+          difference: undefined,
+          status: "Added"
+        });
+      }
+
+      return channelComparison;
+    }
+
+    function getTableRow(columns, isHeader = true, isEvenRow = true) {
+      var tr = document.createElement('tr');
+      tr.setAttribute('role', 'row');
+
+      let classes = ["px-6", "py-3", "text-center", "text-sm", "text-gray-700", "font-semibold"];
+      let colType = "th";
+
+      if (!isHeader) {
+        colType = "td";
+        classes = ["px-6", "py-3", "whitespace-nowrap", "text-sm", "text-center", "text-gray-900"];
+
+        if (isEvenRow)
+          classes = classes.concat('bg-gray-100');
+      }
+
+      for (let columnInfo of columns) {
+        let currentClasses = classes.concat(columnInfo["classes"]);
+        var tdElement = document.createElement(colType);
+        tdElement.innerHTML = columnInfo["name"];
+        tdElement.setAttribute('class', currentClasses.join(' '));
+        tr.appendChild(tdElement);
+      }
+
+      return tr;
+    }
+
+    function getTableHeader(columns) {
+      var thead = document.createElement('thead');
+      thead.setAttribute('class', 'bg-gray-300');
+
+      thead.appendChild(getTableRow(columns));
+
+      return thead;
+    }
+
+    function getTableBody(data) {
+
+      var tbody = document.createElement('tbody');
+
+      let tdClasses = ["px-6", "py-3", "whitespace-nowrap", "text-sm", "text-center", "text-gray-900"];
+      let tdClassesOdd = tdClasses.concat('bg-gray-100');
+
+      for (let [i, tableRow] of data.entries()) {
+        tr = document.createElement('tr');
+        tbody.appendChild(tr);
+
+        let isEvenRow = false;
+        if (i % 2 == 0)
+          isEvenRow = true;
+
+        tbody.appendChild(getTableRow(tableRow, false, isEvenRow));
+      }
+
+
+
+      return tbody;
+    }
+
+    function updateTable(tableId, frequencyCompareColumns, frequencyTableData) {
+
+      var table = document.createElement('table');
+      table.setAttribute('class', 'min-w-full divide-y divide-gray-200');
+
+      table.appendChild(getTableHeader(frequencyCompareColumns));
+
+      table.appendChild(getTableBody(frequencyTableData));
+
+      document.getElementById(tableId).innerHTML = '';
+      document.getElementById(tableId).appendChild(table);
+    }
+
+    function generateComparison(afc_server_response, other_server_response) {
+
+      let comparedChannels = compareChannels(afc_server_response.availableSpectrumInquiryResponses[0].availableChannelInfo, other_server_response.availableSpectrumInquiryResponses[0].availableChannelInfo);
+
+      comparedChannels.sort((a, b) => parseInt(a.operatingClass) - parseInt(b.operatingClass));
+
+      let channelCompareColumns = [{
+        "name": "#",
+        "classes": []
+      }, {
+        "name": "Operating Class",
+        "classes": []
+      }, {
+        "name": "Channel",
+        "classes": []
+      }, {
+        "name": "Status (w.r.t Response 2)",
+        "classes": []
+      }, {
+        "name": "Response 1 EIRP",
+        "classes": ['text-right']
+      }, {
+        "name": "Response 2 EIRP",
+        "classes": ['text-right']
+      }, {
+        "name": "Difference",
+        "classes": ['text-right']
+      }];
+
+      let channelTableData = [];
+      for (let [i, comparedChannel] of comparedChannels.entries()) {
+        let tableRow = [];
+        tableRow.push({
+          "name": i + 1,
+          "classes": []
+        });
+
+        tableRow.push({
+          "name": comparedChannel["operatingClass"],
+          "classes": []
+        });
+
+        tableRow.push({
+          "name": comparedChannel["channel"],
+          "classes": []
+        });
+
+        let statusClass = ['font-semibold', 'bg-yellow-200', 'text-gray-700'];
+        if (comparedChannel["status"] == "Found")
+          statusClass = ['font-semibold', 'bg-green-200', 'text-green-800'];
+        else if (comparedChannel["status"] == "Missing")
+          statusClass = ['font-semibold', 'bg-red-200', 'text-red-800'];
+
+        tableRow.push({
+          "name": comparedChannel["status"],
+          "classes": statusClass
+        });
+
+        let maxEIRP = "";
+        if (comparedChannel["maxEIRP"] !== undefined)
+        maxEIRP = comparedChannel["maxEIRP"];
+
+        tableRow.push({
+          "name": maxEIRP,
+          "classes": ['text-right']
+        });
+
+        let expectedMaxEIRP = "";
+        if (comparedChannel["expectedMaxEIRP"] !== undefined)
+        expectedMaxEIRP = comparedChannel["expectedMaxEIRP"];
+
+        tableRow.push({
+          "name": expectedMaxEIRP,
+          "classes": ['text-right']
+        });
+
+        let tdDiffClass = [];
+        if (comparedChannel["difference"] == 0)
+          tdDiffClass = ['font-semibold', 'bg-green-200', 'text-green-800'];
+
+        let difference = comparedChannel["difference"];
+        if (comparedChannel["difference"] == 0)
+          difference = "0";
+        else if (comparedChannel["difference"] === undefined)
+          difference = "";
+
+        tableRow.push({
+          "name": difference,
+          "classes": ['text-right']
+        });
+
+        channelTableData.push(tableRow)
+      }
+
+
+      updateTable('channel-table', channelCompareColumns, channelTableData);
+
+    }
+
+    const element = document.getElementById("compare-response");
+
+    element.addEventListener("click", function () {
+      const response_1 = document.getElementById('response-1');
+
+      const response_2 = document.getElementById('response-2');
+
+      document.getElementById("response-1-message").innerHTML = "";
+      var result_wrapper = document.getElementById("comparision-result-wrapper");
+
+      if (!result_wrapper.classList.contains('invisible')) {
+        result_wrapper.classList.add('invisible');
+      }
+
+      try {
+        generateComparison(JSON.parse(response_1.value), JSON.parse(response_2.value));
+        
+        if (result_wrapper.classList.contains('invisible')) {
+          result_wrapper.classList.remove('invisible');
+        }
+      }
+      catch(err) {
+        document.getElementById("response-1-message").innerHTML = "Comparison failed. Please check the inputs";
+      }
+    });
+
+    const swap_element = document.getElementById("swap-response");
+
+    swap_element.addEventListener("click", function () {
+      const response_1_string = document.getElementById('response-1').value;
+
+      const response_2_string = document.getElementById('response-2').value;
+
+      document.getElementById('response-1').value = response_2_string;
+      document.getElementById('response-2').value = response_1_string;
+    });
+	
+    const file_input_1 = document.getElementById('file-input-1');
+    const load_response_1 = document.getElementById('load-response-1');
+    const response_1 = document.getElementById('response-1');
+
+    load_response_1.addEventListener('click', () => {
+      file_input_1.click();
+    });
+
+    file_input_1.addEventListener('change', () => {
+        const selectedFile = file_input_1.files[0];
+
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                response_1.value = event.target.result;
+            };
+
+            reader.readAsText(selectedFile);
+        }
+    });
+	
+	const file_input_2 = document.getElementById('file-input-2');
+    const load_response_2 = document.getElementById('load-response-2');
+    const response_2 = document.getElementById('response-2');
+
+    load_response_2.addEventListener('click', () => {
+      file_input_2.click();
+    });
+
+    file_input_2.addEventListener('change', () => {
+        const selectedFile = file_input_2.files[0];
+
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                response_2.value = event.target.result;
+            };
+
+            reader.readAsText(selectedFile);
+        }
+    });
+  </script>
+</body>
+
+</html>
